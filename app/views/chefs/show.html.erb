@@ -6,3 +6,11 @@
   - <%= dish.name %><br>
   <% end %>
 </div>
+
+<div id="add-dish">
+  <%= form_with model: @chef, local: true do |form| %>
+  <%= form.label :dish_id %>
+  <%= form.text_field :dish_id %>
+  <%= form.submit "Add Dish" %>
+  <% end %>
+</div>
