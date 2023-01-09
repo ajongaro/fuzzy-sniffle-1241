@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-RSpec.describe 'The Chef Show Page', type: :feature do
+RSpec.describe "The Chef Ingredients Index Page", type: :feature do
   let!(:chef1) { Chef.create!(name: "Antonio") }
   let!(:chef2) { Chef.create!(name: "Mario") }
 
@@ -20,63 +20,22 @@ RSpec.describe 'The Chef Show Page', type: :feature do
   let!(:dish_ingredient2) { DishIngredient.create!(dish: dish1, ingredient: ingredient2) }
   let!(:dish_ingredient3) { DishIngredient.create!(dish: dish2, ingredient: ingredient3) }
   let!(:dish_ingredient4) { DishIngredient.create!(dish: dish2, ingredient: ingredient4) }
-  let!(:dish_ingredient5) { DishIngredient.create!(dish: dish3, ingredient: ingredient5) }
+  let!(:dish_ingredient5) { DishIngredient.create!(dish: dish3, ingredient: ingredient4) }
   let!(:dish_ingredient6) { DishIngredient.create!(dish: dish3, ingredient: ingredient1) }
   let!(:dish_ingredient7) { DishIngredient.create!(dish: dish4, ingredient: ingredient2) }
   let!(:dish_ingredient8) { DishIngredient.create!(dish: dish4, ingredient: ingredient3) }
   let!(:dish_ingredient9) { DishIngredient.create!(dish: dish5, ingredient: ingredient4) }
   let!(:dish_ingredient10) { DishIngredient.create!(dish: dish5, ingredient: ingredient5) }
 
-  describe 'when I visit a chefs show page' do
-    it 'shows the name of that chef' do
-      visit chef_path(chef1)  
+  describe 'what it shows' do
+    it 'shows all of a chefs used ingredients' do
+      visit chef_ingredients_path(chef1)  
 
-      expect(page).to have_content(chef1.name)
-      expect(page).to_not have_content(chef2.name)
-    end
-    
-    it 'shows the name of that chef' do
-      visit chef_path(chef1)  
-
-      within("#dishes") do
-        expect(page).to have_content(dish1.name)
-        expect(page).to have_content(dish2.name)
-        expect(page).to have_content(dish3.name)
-      end
-    end
-
-    it 'has a form to add an existing dish to that chef' do
-      visit chef_path(chef1)  
-
-      within("#dishes") do
-        expect(page).to have_content(dish1.name)
-        expect(page).to have_content(dish2.name)
-        expect(page).to have_content(dish3.name)
-        expect(page).to_not have_content(dish4.name)
-      end
-
-      within("#add-dish") do
-        expect(page).to have_field("Dish")
-        fill_in("Dish", with: dish4.id )
-        click_button("Add Dish")
-      end
-
-      expect(current_path).to eq(chef_path(chef1))
-
-      within("#dishes") do
-        expect(page).to have_content(dish1.name)
-        expect(page).to have_content(dish2.name)
-        expect(page).to have_content(dish3.name)
-        expect(page).to have_content(dish4.name)
-      end
-    end
-
-    it 'has a link to view a list of all ingredients that this chef uses' do
-      visit chef_path(chef1)  
-
-      expect(page).to have_link("All Ingredients")
-      click_link("All Ingredients")
-      expect(current_path).to eq("/chefs/#{chef1.id}/ingredients")
+      expect(page).to have_content(ingredient1.name)
+      expect(page).to have_content(ingredient2.name)
+      expect(page).to have_content(ingredient3.name)
+      expect(page).to have_content(ingredient4.name)
+      expect(page).to_not have_content(ingredient5.name)
     end
   end
 end
