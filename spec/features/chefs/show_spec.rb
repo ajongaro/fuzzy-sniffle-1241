@@ -76,7 +76,7 @@ RSpec.describe 'The Chef Show Page', type: :feature do
 
       expect(page).to have_link("All Ingredients")
       click_link("All Ingredients")
-      expect(current_path).to eq("/chefs/#{chef1.id}/ingredients")
+      expect(current_path).to eq(chef_ingredients_path(chef1))
     end
   end
 end
