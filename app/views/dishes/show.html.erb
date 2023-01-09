@@ -1,8 +1,14 @@
 <h1> <%= @dish.name %> Show Page</h1>
+<div id="chef-name">
+Created By, Chef <%= @dish.chef.name  %><br>
+</div>
 <b>Description:</b> <%= @dish.description %><br>
 <div id="ingredients">
   <b>Dish Ingredients:</b><br>
   <% @dish.ingredients.each do |ingredient| %><br>
     <%= ingredient.name %>
   <% end %>
+</div>
+<div id="calories">
+<b>Total Calories:</b> <%= @dish.total_calories %>
 </div>

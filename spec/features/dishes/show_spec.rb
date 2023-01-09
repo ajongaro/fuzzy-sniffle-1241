@@ -2,7 +2,7 @@ require 'rails_helper'
 
 RSpec.describe "The Dish Show page", type: :feature do
   let!(:chef1) { Chef.create!(name: "Antonio") }
-  let!(:chef2) { Chef.create!(name: "Antonio") }
+  let!(:chef2) { Chef.create!(name: "Mario") }
 
   let!(:dish1) { Dish.create!(name: "Pasta", description: "Very tasty", chef: chef1) }
   let!(:dish2) { Dish.create!(name: "Fettuccini", description: "Yum", chef: chef1) }
@@ -41,6 +41,34 @@ RSpec.describe "The Dish Show page", type: :feature do
       within("#ingredients") do
         expect(page).to have_content(ingredient3.name)
         expect(page).to have_content(ingredient4.name)
+        expect(page).to_not have_content(ingredient5.name)
+      end
+    end
+
+    it 'shows the Chefs name' do
+      visit dish_path(dish1)
+
+      within("#chef-name") do
+        expect(page).to have_content(chef1.name)
+      end
+    end
+
+    it 'shows total dish calories' do
+      visit dish_path(dish3)
+
+      within("#ingredients") do
+        expect(page).to have_content(ingredient1.name)
+        expect(page).to have_content(ingredient5.name)
+        expect(page).to_not have_content(ingredient2.name)
+      end
+
+      within("#calories") do
+        expect(page).to have_content("Total Calories: 100")
+      end
+
+      visit dish_path(dish2)
+      within("#calories") do
+        expect(page).to have_content("Total Calories: 1000")
       end
     end
   end
