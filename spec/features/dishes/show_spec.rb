@@ -29,7 +29,10 @@ RSpec.describe "The Dish Show page", type: :feature do
 
   describe 'when I visit the dishs show page' do
     it 'shows a dish name and description' do
-      
+      visit dish_path(dish1)
+
+      expect(page).to have_content(dish1.name)
+      expect(page).to have_content(dish1.description)
     end
   end
 end
